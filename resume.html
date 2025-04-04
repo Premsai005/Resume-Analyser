@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resume Category Prediction</title>
+</head>
+<style>
+    body{
+        font:arial, sans-serif;
+        background-color: #fff;
+        color:#333;
+    }
+    .container{
+        max-width: 600px;
+        margin:auto;
+        padding:20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.8);
+    }
+    h2{
+        text-align:center;
+        margin-bottom:20px;
+
+    }
+    form{
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    input[type="file"]{
+        margin-bottom: 20px;
+    }
+    input[type="submit"]{
+        padding:10px 20px;
+        background-color: rgb(244, 116, 131);
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    input[type="submit"]:hover{
+        background-color: #45a849;
+    }
+</style>
+<body>
+    <div class="container" style="background:rgb(10, 7, 28);color:white; ">
+        <h1>
+           AI based Resume Screening system</h1>
+           <p>This system support TXT and PDF files ,It can help you in the following ...           </p>
+           <ul>
+            <li>
+                Resume Categorization
+            </li>
+            <li>
+                Resume job recommendation
+            </li><li>
+                Resume parsing(Information extraction)
+            </li>
+           </ul>
+        
+    </div>
+    <div class="container" style="margin-top:20px;background:rgb(10, 7, 28);color:white; ">
+        <h2>Upload your resume</h2>
+        <form action="/pred" method="post" enctype="multipart/form-data">
+            <input type="file" name="resume" accept=".pdf, .txt", required>
+            <input type="submit" value="submit">
+        </form>
+        {% if message %}
+        <p class="text-center">{{message}}</p>
+        {% endif %}
+
+        {% if predicted_category %}
+        <br>
+        <hr>
+        <br>
+        <p class="text-center"><b><strong>Category: </strong></b>{{predicted_category}}</p>
+        <p class="text-center"><b><strong>Recommeneded job: </strong></b>{{recommended_job}}</p>
+        <br>
+        <hr>
+        <h1 class="text-center">Extracted Information</h1>
+        <p class="text-center"><b><strong>Name: </strong></b>{{name}}</p>
+        <p class="text-center"><b><strong>Phone: </strong></b>{{phone}}</p>
+        <p class="text-center"><b><strong>Email: </strong></b>{{email}}</p>
+        {% if extracted_skills %}
+        <p class="text-center"><b><strong>Skills</strong></b></p>
+        <ul class="list-unstyled text-center">
+            {% for skills in extracted_skills %}
+            <li>{{skills}}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="text-center">No skills found......</p>
+        <br>
+        {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
